@@ -111,4 +111,21 @@ void merge_telemetry(double **telemetries,
                      int &global_telemetry_current_size,
                      int &global_telemetry_max_size) {
   // IMPLEMENT YOUR FUNCTION HERE
+    for (int i=0; i < tot_telemetries; i++) {
+        for (int j=0; j < telemetries_sizes[i]; j++) {
+            global_telemetry = append_to_array(telemetries[i][j], global_telemetry, global_telemetry_current_size, global_telemetry_max_size); // global_telemtry created with all entries but not ordered by t
+        }
+    }
+    int tot_t_entries = global_telemetry_current_size / 3;
+    for (int i=0; i < tot_t_entries; i++){
+        for (int j=0; j < global_telemetry_current_size-3; j+=3) {
+            if (global_telemetry[j] > global_telemetry[j+3]) {
+                for (int k=0; k<3; k++) {
+                    double temp = global_telemetry[j+k];
+                    global_telemetry[j+k] = global_telemetry[j+k+3];
+                    global_telemetry[j+k+3] = temp;
+                }
+            }
+        }
+    }
 }
